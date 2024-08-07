@@ -1,0 +1,83 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+
+Copy code
+# Android Studio specific
+.idea/
+*.iml
+.gradle/
+local.properties
+**/build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.hprof
+
+# Gradle specific
+.gradle/
+build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+gradle-app.setting
+gradle.properties
+
+# MacOS specific
+.DS_Store
+
+# Windows specific
+Thumbs.db
+
+# Log files
+*.log
+
+# Crashlytics files
+crashlytics.properties
+crashlytics-build.properties
+
+# Other generated files
+*.apk
+*.ap_
+*.dex
+*.class
+*.apk
+*.ap_
+*.dex
+*.class
+*.so
+*.swo
+*.jar
+*.war
+*.ear
+*.swp
+
+# Keystore files (do not commit these)
+*.jks
+*.keystore
+
+# Local configuration file (SDK paths, etc)
+local.properties
+
+# Ignore gradle task configuration files
+*.lock
+gradle-app.setting
+
+# Ignore lint and quality files
+lint/intermediates/
+lint/generated/
+lint/outputs/
+lint/lint.xml
+outputs/

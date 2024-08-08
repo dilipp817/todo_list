@@ -82,6 +82,13 @@ dependencies {
     implementation(libs.okhttp.logging.interceptor)
 
     //Room
-    implementation(libs.androidx.room.ktx)
+//    implementation(libs.room.runtime)//TODO:this needs to be checked
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
+
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 
 }

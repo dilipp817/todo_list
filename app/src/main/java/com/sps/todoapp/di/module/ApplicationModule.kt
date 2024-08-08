@@ -1,11 +1,19 @@
 package com.sps.todoapp.di.module
 
+import android.content.Context
+import androidx.room.Room
+import com.sps.todoapp.data.local.room.AppDatabase
+import com.sps.todoapp.data.local.room.dao.TaskDao
+import com.sps.todoapp.data.local.room.repository.LocalRepository
+import com.sps.todoapp.data.local.room.repository.LocalRepositoryImpl
 import com.sps.todoapp.data.remote.ApiHelper
 import com.sps.todoapp.data.remote.ApiHelperImpl
 import com.sps.todoapp.data.remote.ApiService
+import com.sps.todoapp.repository.MainRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -52,4 +60,27 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun provideApiHelper(apiHelper: ApiHelperImpl): ApiHelper = apiHelper
+
+    @Provides
+    @Singleton
+    fun provideDatabase(
+        @ApplicationContext appContext: Context
+    ): AppDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            AppDatabase::class.java,
+            "task_database"
+        ).build()
+    }
+
+    @Provides
+    fun provideTaskDao(db: AppDatabase): TaskDao {
+        return db.taskDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocalRepository(taskDao: TaskDao): LocalRepository {
+        return LocalRepositoryImpl(taskDao)
+    }
 }

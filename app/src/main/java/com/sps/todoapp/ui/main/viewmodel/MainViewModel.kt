@@ -34,7 +34,6 @@ class MainViewModel @Inject constructor(
 
     fun addTask(task: Task) {
         viewModelScope.launch(Dispatchers.IO ) {
-            Log.d("Total task found now is ghjkl", "Add Task called")
             repository.addTask(task)
         }
     }

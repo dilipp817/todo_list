@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ToDo App</string>
+
+
+    <string name="AppBar">To Do List</string>
+    <string name="txt_save">Save</string>
+    <string name="empty_page_text">Press the + button to add a TODO item.</string>
 </resources>

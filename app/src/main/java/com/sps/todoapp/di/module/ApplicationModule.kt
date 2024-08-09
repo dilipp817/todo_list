@@ -9,7 +9,6 @@ import com.sps.todoapp.data.local.room.repository.LocalRepositoryImpl
 import com.sps.todoapp.data.remote.ApiHelper
 import com.sps.todoapp.data.remote.ApiHelperImpl
 import com.sps.todoapp.data.remote.ApiService
-import com.sps.todoapp.repository.MainRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

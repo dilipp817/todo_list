@@ -1,7 +1,7 @@
-package com.sps.todoapp.repository
+package com.sps.data.repository
 
-import com.sps.todoapp.data.local.room.entity.Task
-import com.sps.todoapp.data.local.room.repository.LocalRepository
+import com.sps.data.local.room.entity.Task
+import com.sps.data.local.room.repository.LocalRepository
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(

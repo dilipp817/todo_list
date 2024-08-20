@@ -20,14 +20,13 @@ fun EmptyContent(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            modifier =  Modifier
+            modifier = Modifier
                 .fillMaxWidth(0.8f),
             text = stringResource(id = R.string.empty_page_text),
             fontSize = 20.sp
         )
     }
 }
-
 
 
 @Composable

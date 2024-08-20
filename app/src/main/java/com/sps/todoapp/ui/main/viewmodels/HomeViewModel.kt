@@ -2,8 +2,8 @@ package com.sps.todoapp.ui.main.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sps.todoapp.data.local.room.entity.Task
-import com.sps.todoapp.repository.MainRepository
+import com.sps.data.local.room.entity.Task
+import com.sps.data.repository.MainRepository
 import com.sps.todoapp.ui.main.viewmodels.HomeViewModel.State.AddTask
 import com.sps.todoapp.ui.main.viewmodels.HomeViewModel.State.Error
 import com.sps.todoapp.ui.main.viewmodels.HomeViewModel.State.Loading
@@ -14,6 +14,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -47,8 +52,7 @@ class HomeViewModel @Inject constructor(
                 if (tasks.isEmpty()) {
                     _allTasks.value = emptyList()
                     _screenState.value = Error
-                }
-                else {
+                } else {
                     _allTasks.value = tasks
                     _screenState.value = TaskScreen(tasks)
                 }
@@ -57,7 +61,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun addTask() {
-        viewModelScope.launch(Dispatchers.Main ) {
+        viewModelScope.launch(Dispatchers.Main) {
             try {
                 taskNameText.value.let { taskName ->
                     if (taskName.equals("Error", ignoreCase = true)) {
@@ -89,18 +93,28 @@ class HomeViewModel @Inject constructor(
             CoroutineScope(Dispatchers.Main).launch {
                 _allTasks.map { tasks ->
                     TaskScreen(tasks)
-                }.collect { tasks ->
-                    _screenState.value = tasks
                 }
+                    .flowOn(Dispatchers.Default)
+                    .collect { tasks ->
+                        _screenState.value = tasks
+                    }
             }
         } else {
             CoroutineScope(Dispatchers.Main).launch {
-                _allTasks.map { tasks ->
-                    val filteredTasks = tasks.filter { it.taskName.contains(text, ignoreCase = true) }
-                    TaskScreen((filteredTasks))
-                }.collect { newState ->
-                    _screenState.value = newState
-                }
+                flowOf(text)
+                    .debounce(200)
+                    .distinctUntilChanged()
+                    .flatMapLatest { text ->
+                        _allTasks.map { tasks ->
+                            val filteredTasks =
+                                tasks.filter { it.taskName.contains(text, ignoreCase = true) }
+                            TaskScreen((filteredTasks))
+                        }
+                    }
+                    .flowOn(Dispatchers.Default)
+                    .collect { newState ->
+                        _screenState.value = newState
+                    }
             }
         }
     }
@@ -119,7 +133,7 @@ class HomeViewModel @Inject constructor(
     sealed class State {
         data object Loading : State()
         data object Empty : State()
-        class TaskScreen(val tasks: List<Task>): State()
+        class TaskScreen(val tasks: List<Task>) : State()
         data object AddTask : State()
         data object Error : State()
     }

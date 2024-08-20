@@ -1,9 +1,9 @@
-package com.sps.todoapp.data.local.room.dao
+package com.sps.data.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.sps.todoapp.data.local.room.entity.Task
+import com.sps.data.local.room.entity.Task
 import kotlinx.coroutines.flow.Flow
 
 @Dao

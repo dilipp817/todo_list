@@ -1,5 +1,6 @@
 package com.sps.todoapp.ui.main.views
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,7 +14,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.sps.todoapp.R
-import com.sps.todoapp.data.local.room.entity.Task
+import com.sps.data.local.room.entity.Task
 
 @Composable
 fun ListContent(
@@ -21,7 +22,7 @@ fun ListContent(
     tasksList: List<Task>
 ) {
 
-    LazyColumn {
+    LazyColumn(modifier = modifier.fillMaxSize()) {
         items(
             items = tasksList,
             key = { task -> task.id }

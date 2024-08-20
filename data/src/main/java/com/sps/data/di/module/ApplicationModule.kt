@@ -1,11 +1,10 @@
-package com.sps.todoapp.di.module
+package com.sps.data.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.sps.todoapp.data.local.room.AppDatabase
-import com.sps.todoapp.data.local.room.dao.TaskDao
-import com.sps.todoapp.data.local.room.repository.LocalRepository
-import com.sps.todoapp.data.local.room.repository.LocalRepositoryImpl
+import com.sps.data.local.room.AppDatabase
+import com.sps.data.local.room.repository.LocalRepository
+import com.sps.data.local.room.repository.LocalRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,13 +29,13 @@ class ApplicationModule {
     }
 
     @Provides
-    fun provideTaskDao(db: AppDatabase): TaskDao {
+    fun provideTaskDao(db: AppDatabase): com.sps.data.local.room.dao.TaskDao {
         return db.taskDao()
     }
 
     @Provides
     @Singleton
-    fun provideLocalRepository(taskDao: TaskDao): LocalRepository {
+    fun provideLocalRepository(taskDao: com.sps.data.local.room.dao.TaskDao): LocalRepository {
         return LocalRepositoryImpl(taskDao)
     }
 }

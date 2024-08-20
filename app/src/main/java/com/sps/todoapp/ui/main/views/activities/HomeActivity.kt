@@ -35,7 +35,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-     override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             TopAppBarApp()
@@ -71,7 +71,8 @@ fun TopAppBarApp(modifier: Modifier = Modifier) {
                 is AddTask -> AddTaskScreen(modifier.padding(paddingValues))
                 is Empty -> EmptyContent(modifier.padding(paddingValues))
                 is Error -> EmptyContent(modifier.padding(paddingValues))
-                is TaskScreen -> TaskListScreen(modifier.padding(paddingValues),
+                is TaskScreen -> TaskListScreen(
+                    modifier.padding(paddingValues),
                     screenState as TaskScreen
                 )
             }

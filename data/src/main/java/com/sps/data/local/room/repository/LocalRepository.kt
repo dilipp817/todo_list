@@ -1,6 +1,6 @@
-package com.sps.todoapp.data.local.room.repository
+package com.sps.data.local.room.repository
 
-import com.sps.todoapp.data.local.room.entity.Task
+import com.sps.data.local.room.entity.Task
 import kotlinx.coroutines.flow.Flow
 
 interface LocalRepository {

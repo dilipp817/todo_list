@@ -25,7 +25,8 @@ import com.sps.todoapp.R
 
 @Composable
 fun AddTaskScreen(
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -43,9 +44,9 @@ fun AddTaskScreen(
                 .align(Alignment.CenterHorizontally),
             onClick = {
                 if (viewModel.isValid().not()) {
-                    Toast.makeText(context, "Task name should not be blank", Toast.LENGTH_SHORT).show()
-                }
-                else {
+                    Toast.makeText(context, "Task name should not be blank", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
                     viewModel.addTask()
                 }
             }) {
@@ -65,7 +66,7 @@ fun TaskDescriptionInput(modifier: Modifier = Modifier) {
         onValueChange = {
             description = it
             viewModel.onTaskNameChange(it)
-                        },
+        },
         textStyle = TextStyle(color = Color.Black, fontSize = 18.sp),
         modifier = modifier
             .fillMaxSize()

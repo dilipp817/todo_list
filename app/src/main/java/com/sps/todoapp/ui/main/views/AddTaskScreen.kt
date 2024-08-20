@@ -1,4 +1,4 @@
-package com.sps.todoapp.ui.main.view
+package com.sps.todoapp.ui.main.views
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sps.todoapp.ui.main.viewmodel.MainViewModel
+import com.sps.todoapp.ui.main.viewmodels.HomeViewModel
 import com.sps.todoapp.R
 
 @Composable
@@ -31,7 +31,7 @@ fun AddTaskScreen(
             .fillMaxSize()
             .padding(dimensionResource(id = R.dimen.dimen_16))
     ) {
-        val viewModel = hiltViewModel<MainViewModel>()
+        val viewModel = hiltViewModel<HomeViewModel>()
         val context = LocalContext.current
         TaskDescriptionInput(modifier.weight(0.7f)) // Assuming there's a description input
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.dimen_16)))
@@ -58,7 +58,7 @@ fun AddTaskScreen(
 @Composable
 fun TaskDescriptionInput(modifier: Modifier = Modifier) {
     var description by remember { mutableStateOf("") }
-    val viewModel = hiltViewModel<MainViewModel>()
+    val viewModel = hiltViewModel<HomeViewModel>()
 
     BasicTextField(
         value = description,

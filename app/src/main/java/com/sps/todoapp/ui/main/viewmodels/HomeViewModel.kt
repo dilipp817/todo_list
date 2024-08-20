@@ -1,14 +1,13 @@
-package com.sps.todoapp.ui.main.viewmodel
+package com.sps.todoapp.ui.main.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sps.todoapp.data.local.room.entity.Task
 import com.sps.todoapp.repository.MainRepository
-import com.sps.todoapp.ui.main.viewmodel.MainViewModel.State.AddTask
-import com.sps.todoapp.ui.main.viewmodel.MainViewModel.State.Error
-import com.sps.todoapp.ui.main.viewmodel.MainViewModel.State.Loading
-import com.sps.todoapp.ui.main.viewmodel.MainViewModel.State.TaskScreen
+import com.sps.todoapp.ui.main.viewmodels.HomeViewModel.State.AddTask
+import com.sps.todoapp.ui.main.viewmodels.HomeViewModel.State.Error
+import com.sps.todoapp.ui.main.viewmodels.HomeViewModel.State.Loading
+import com.sps.todoapp.ui.main.viewmodels.HomeViewModel.State.TaskScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +20,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val repository: MainRepository
 ) : ViewModel() {
 
@@ -30,16 +29,16 @@ class MainViewModel @Inject constructor(
     private val _searchText = MutableStateFlow<String>("")
     val searchText: StateFlow<String> = _searchText
     private val _taskNameText = MutableStateFlow<String>("")
-    val taskNameText: StateFlow<String> = _taskNameText
+    private val taskNameText: StateFlow<String> = _taskNameText
     private val _isSearching = MutableStateFlow<Boolean>(false)
-    val isSearching: StateFlow<Boolean> = _isSearching
+    private val isSearching: StateFlow<Boolean> = _isSearching
     private val _allTasks = MutableStateFlow<List<Task>>(emptyList())
 
     init {
         fetchTasks()
     }
 
-    fun fetchTasks() {
+    private fun fetchTasks() {
         viewModelScope.launch(Dispatchers.IO) {
             _screenState.value = Loading
 
@@ -110,14 +109,14 @@ class MainViewModel @Inject constructor(
         _taskNameText.value = newName
     }
 
-    fun onToogleSearch() {
+    fun onToggleSearch() {
         _isSearching.value = !_isSearching.value
-        if (!_isSearching.value) {
+        if (!isSearching.value) {
             onSearchTextChange("")
         }
     }
 
-    sealed class State() {
+    sealed class State {
         data object Loading : State()
         data object Empty : State()
         class TaskScreen(val tasks: List<Task>): State()

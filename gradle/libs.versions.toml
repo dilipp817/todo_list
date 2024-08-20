@@ -10,10 +10,6 @@ activityCompose = "1.9.1"
 composeBom = "2024.04.01"
 hiltVersion = "2.49"
 ksp = "1.9.0-1.0.13"
-moshi = "2.6.2"
-retrofit = "2.8.1"
-squareup = "4.7.2"
-loggingInspector = "4.7.2"
 room = "2.6.1"
 
 navigationCompose = "2.7.7"
@@ -44,12 +40,6 @@ androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navig
 ## Hilt
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion" }
-
-## Retrofit
-moshi-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "moshi" }
-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-squareup-okhttp = {group = "com.squareup.okhttp3", name = "okhttp", version.ref = "squareup" }
-okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInspector" }
 
 ##Room
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }

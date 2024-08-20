@@ -1,13 +1,8 @@
-package com.sps.todoapp.ui.main.view.activities
+package com.sps.todoapp.ui.main.views.activities
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -15,7 +10,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
@@ -24,28 +18,23 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.lifecycleScope
 import com.sps.todoapp.R
-import com.sps.todoapp.ui.main.view.AddTaskScreen
-import com.sps.todoapp.ui.main.view.EmptyContent
-import com.sps.todoapp.ui.main.view.ListContent
-import com.sps.todoapp.ui.main.view.LoadingScreen
-import com.sps.todoapp.ui.main.viewmodel.MainViewModel
-import com.sps.todoapp.ui.main.viewmodel.MainViewModel.State.AddTask
-import com.sps.todoapp.ui.main.viewmodel.MainViewModel.State.Empty
-import com.sps.todoapp.ui.main.viewmodel.MainViewModel.State.Error
-import com.sps.todoapp.ui.main.viewmodel.MainViewModel.State.Loading
-import com.sps.todoapp.ui.main.viewmodel.MainViewModel.State.TaskScreen
+import com.sps.todoapp.ui.main.views.AddTaskScreen
+import com.sps.todoapp.ui.main.views.EmptyContent
+import com.sps.todoapp.ui.main.views.LoadingScreen
+import com.sps.todoapp.ui.main.views.TaskListScreen
+import com.sps.todoapp.ui.main.viewmodels.HomeViewModel
+import com.sps.todoapp.ui.main.viewmodels.HomeViewModel.State.AddTask
+import com.sps.todoapp.ui.main.viewmodels.HomeViewModel.State.Empty
+import com.sps.todoapp.ui.main.viewmodels.HomeViewModel.State.Error
+import com.sps.todoapp.ui.main.viewmodels.HomeViewModel.State.Loading
+import com.sps.todoapp.ui.main.viewmodels.HomeViewModel.State.TaskScreen
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    val viewModel: MainViewModel by viewModels()
      override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -57,7 +46,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBarApp(modifier: Modifier = Modifier) {
-    val viewModel = hiltViewModel<MainViewModel>()
+    val viewModel = hiltViewModel<HomeViewModel>()
     val screenState by viewModel.screenState.collectAsState()
     Scaffold(
         topBar = {
@@ -82,31 +71,9 @@ fun TopAppBarApp(modifier: Modifier = Modifier) {
                 is AddTask -> AddTaskScreen(modifier.padding(paddingValues))
                 is Empty -> EmptyContent(modifier.padding(paddingValues))
                 is Error -> EmptyContent(modifier.padding(paddingValues))
-                is TaskScreen -> {
-                    val taskList = (screenState as TaskScreen).tasks
-                    val searchQuery by viewModel.searchText.collectAsState()
-                    Column(
-                        modifier = modifier
-                            .fillMaxSize()
-                            .padding(paddingValues)
-                    ) {
-                        SearchBar(
-                            query = searchQuery,
-                            onQueryChange = viewModel::onSearchTextChange,
-                            onSearch = viewModel::onSearchTextChange,
-                            active = false,
-                            onActiveChange = { viewModel.onToogleSearch() },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(dimensionResource(id = R.dimen.dimen_16))
-                        ) {}
-                        ListContent(
-                            modifier = Modifier,
-                            tasksList = taskList
-                        )
-                    }
-
-                }
+                is TaskScreen -> TaskListScreen(modifier.padding(paddingValues),
+                    screenState as TaskScreen
+                )
             }
         },
         floatingActionButton = {

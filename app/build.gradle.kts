@@ -75,12 +75,6 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     kspAndroidTest(libs.hilt.android.compiler)
 
-    //Retrofit
-    implementation(libs.moshi.converter.moshi)
-    implementation(libs.retrofit)
-    implementation(libs.squareup.okhttp)
-    implementation(libs.okhttp.logging.interceptor)
-
     //Room
 //    implementation(libs.room.runtime)//TODO:this needs to be checked
     implementation(libs.room.ktx)

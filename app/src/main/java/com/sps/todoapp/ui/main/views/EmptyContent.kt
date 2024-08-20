@@ -1,4 +1,4 @@
-package com.sps.todoapp.ui.main.view
+package com.sps.todoapp.ui.main.views
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
